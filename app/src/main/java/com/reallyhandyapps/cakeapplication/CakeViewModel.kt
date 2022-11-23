@@ -1,6 +1,5 @@
 package com.reallyhandyapps.cakeapplication
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.reallyhandyapps.domain.CakeDomain
@@ -8,22 +7,24 @@ import com.reallyhandyapps.domain.GetCakesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class CakeViewModel(
+class CakeViewModel @Inject constructor(
     private val getCakesUseCase: GetCakesUseCase
 ) : ViewModel() {
-    private val _cakesList = MutableLiveData<List<CakeDomain>>()
-    val cakesList = _cakesList
 
-    private val _selectedItem = MutableLiveData<CakeDomain>()
-    val selectedItem = _selectedItem
+    //TODO encapsulate UI state in one object
+    private val _cakesList = MutableStateFlow<List<CakeDomain>>(emptyList())
+    val cakesList = _cakesList.asStateFlow()
+
+    private val _selectedItem = MutableStateFlow<CakeDomain?>(null)
+    val selectedItem = _selectedItem.asStateFlow()
 
     private val _error = MutableStateFlow(false)
-    val error: StateFlow<Boolean> = _error.asStateFlow()
+    val error = _error.asStateFlow()
 
     init {
         loadCakesList()

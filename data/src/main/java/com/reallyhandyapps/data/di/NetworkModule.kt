@@ -1,5 +1,6 @@
 package com.reallyhandyapps.data.di
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.reallyhandyapps.data.services.GetCakesService
 import dagger.Module
 import dagger.Provides
@@ -11,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
     @Provides
     fun providesOkhttpClient(): OkHttpClient {
@@ -24,6 +25,8 @@ class NetworkModule {
     fun providesRetroFit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+            .baseUrl("https://gist.githubusercontent.com/t-reed/")
             .client(okHttpClient)
             .build()
     }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
 }
 android {
@@ -44,7 +45,9 @@ android {
         }
     }
 }
-
+hilt {
+    enableAggregatingTask = true
+}
 dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
     implementation("javax.inject:javax.inject:1")

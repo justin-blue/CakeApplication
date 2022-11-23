@@ -3,6 +3,6 @@
     <string name="close_button_text">Close</string>
     <string name="cake_description_dialog_title_text">Cake description</string>
     <string name="generic_error_dialog_title">Something went wrong!</string>
-    <string name="error_dialog_message">Sorry, we we\'re unable to retrieve your list, click \'OK\' to try again</string>
+    <string name="error_dialog_message">Sorry, we were unable to retrieve your list, click Retry to try again</string>
     <string name="retry_button_text">Retry</string>
 </resources>

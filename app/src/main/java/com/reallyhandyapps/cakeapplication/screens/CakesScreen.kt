@@ -2,6 +2,7 @@ package com.reallyhandyapps.cakeapplication.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.reallyhandyapps.cakeapplication.CakeViewModel
@@ -14,24 +15,28 @@ fun CakesScreen(
     modifier: Modifier = Modifier,
     cakeViewModel: CakeViewModel = viewModel()
 ) {
+    val list = cakeViewModel.cakesList.collectAsState().value
+    val selectedItem = cakeViewModel.selectedItem.collectAsState().value
+    val error = cakeViewModel.error.collectAsState().value
+
     Column(modifier = modifier) {
-        cakeViewModel.cakesList.value?.let {
             CakeList(
-                list = it,
+                list = list,
                 onCakeSelected = { item -> cakeViewModel.onCakeSelected(item) },
                 modifier = modifier
             )
-            cakeViewModel.selectedItem.value?.let { it1 ->
-                CakeDialog(
-                    item = it1,
-                    onDialogClosed = { cakeViewModel.onDialogClosed() }
-                )
-            }
-            if (cakeViewModel.error.value) {
-                ErrorDialog(
-                    onDialogErrorClosed = { cakeViewModel.onErrorDialogClosed() }
-                )
-            }
+
+        selectedItem?.let {
+            CakeDialog(
+                item = it,
+                onDialogClosed = { cakeViewModel.onDialogClosed() }
+            )
+        }
+
+        if (error) {
+            ErrorDialog(
+                onDialogErrorClosed = { cakeViewModel.onErrorDialogClosed() }
+            )
         }
     }
 }

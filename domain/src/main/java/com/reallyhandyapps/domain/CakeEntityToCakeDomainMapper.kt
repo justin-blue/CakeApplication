@@ -16,5 +16,4 @@ class CakeEntityToCakeDomainMapper @Inject constructor() : Mapper<List<CakeEntit
          .distinct()
          .sortedBy { it.title }
     }
-
 }
