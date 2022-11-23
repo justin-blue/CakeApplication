@@ -43,6 +43,12 @@ class CakeViewModel @Inject constructor(
         loadCakesList()
     }
 
+    fun onRefreshClicked() {
+        //TODO add loading state and progress bar
+        _cakesList.value = emptyList()
+        loadCakesList()
+    }
+
     private fun loadCakesList() {
         viewModelScope.launch(Dispatchers.IO) {
             val response = getCakesUseCase()

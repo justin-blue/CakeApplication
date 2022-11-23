@@ -2,6 +2,7 @@ package com.reallyhandyapps.cakeapplication.views
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.reallyhandyapps.cakeapplication.screens.CakeItem
@@ -17,11 +18,11 @@ fun CakeList(
         modifier = modifier
     ) {
         items(list) { cake ->
+            Divider()
             CakeItem(
                 cake = cake,
                 onCakeSelected = { onCakeSelected(cake) }
             )
-
         }
     }
 }

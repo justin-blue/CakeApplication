@@ -9,6 +9,7 @@ import com.reallyhandyapps.cakeapplication.CakeViewModel
 import com.reallyhandyapps.cakeapplication.views.CakeDialog
 import com.reallyhandyapps.cakeapplication.views.CakeList
 import com.reallyhandyapps.cakeapplication.views.ErrorDialog
+import com.reallyhandyapps.cakeapplication.views.RefreshButton
 
 @Composable
 fun CakesScreen(
@@ -20,11 +21,11 @@ fun CakesScreen(
     val error = cakeViewModel.error.collectAsState().value
 
     Column(modifier = modifier) {
-            CakeList(
-                list = list,
-                onCakeSelected = { item -> cakeViewModel.onCakeSelected(item) },
-                modifier = modifier
-            )
+        CakeList(
+            list = list,
+            onCakeSelected = { item -> cakeViewModel.onCakeSelected(item) },
+            modifier = modifier
+        )
 
         selectedItem?.let {
             CakeDialog(
@@ -36,6 +37,13 @@ fun CakesScreen(
         if (error) {
             ErrorDialog(
                 onDialogErrorClosed = { cakeViewModel.onErrorDialogClosed() }
+            )
+        }
+
+        if (!error) {
+            RefreshButton(
+                onRefresh = { cakeViewModel.onRefreshClicked() },
+                modifier = modifier
             )
         }
     }
